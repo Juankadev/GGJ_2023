@@ -1,30 +1,42 @@
 extends KinematicBody2D
 
-const speed: float = 250.0
-const maxSpeed: float = 300.0
-const jump_power: float = -400.0
-const gravity: float = 15.0 	
+const speed: float = MovementGlobals.PLAYER_SPEED
+const maxSpeed: float = MovementGlobals.MAX_SPEED
+const jump_power: float = MovementGlobals.JUMP_POWER
 
 var motion = Vector2()
 
-var is_being_pushed = false
-var body_push_direction = 0
+var can_grab = false
+# var body_push_direction = 0
+
+onready var cached_player = $"../Player"
 
 func _physics_process(delta: float) -> void:
+	if false:
+		
+		if can_grab and Input.is_action_pressed("grab"):
+			motion = cached_player.motion
+			motion = move_and_slide(motion, Vector2.UP)
+			print(cached_player.motion.x)
+
+	if !is_on_floor():
+		motion.y += MovementGlobals.GRAVITY;
+
 	var friction = false
 	
-	if !is_on_floor():
-		motion.y += gravity;
+	var is_grabbing: bool = false
+	if can_grab and Input.is_action_pressed("grab"):
+		is_grabbing = true
 
-	if is_being_pushed:
-		var direction: Vector2 = Vector2.ZERO
-		if body_push_direction == 1:
+	if is_grabbing:
+		print("player is grabbing box")
+		if Input.is_action_pressed("move_right"):
 			motion.x = min(motion.x + speed, maxSpeed)
-		elif body_push_direction == -1:
+		elif Input.is_action_pressed("move_left"):
 			motion.x = max(motion.x - speed, -maxSpeed)
 	else:
 		friction = true
-		body_push_direction = 0
+#		body_push_direction = 0
 
 	if friction == true:
 		motion.x = lerp(motion.x, 0, 0.5)
@@ -33,19 +45,17 @@ func _physics_process(delta: float) -> void:
 	
 func _on_PushDetector_body_entered(body: Node) -> void:
 	if body.is_in_group("player"):
-		is_being_pushed = true
-		var dir_debug_string = ""
-		if body.global_position.x > global_position.x:
-			body_push_direction = -1
-			dir_debug_string = "left"
-		else:
-			body_push_direction = 1
-			dir_debug_string = "right"
+		cached_player = body
+		can_grab = true
+#		if body.global_position.x > global_position.x:
+#			body_push_direction = -1
+#		else:
+#			body_push_direction = 1
 			
-		print("player is pushing box to the " + dir_debug_string)
+		print("player can grab box")
 
 func _on_PushDetector_body_exited(body: Node) -> void:
 	if body.is_in_group("player"):
-		body_push_direction = 0
-		is_being_pushed = false
-		print("player stopped pushing box")
+#		body_push_direction = 0
+		can_grab = false
+		print("player cannot grab box")
