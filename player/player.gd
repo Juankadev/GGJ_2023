@@ -5,8 +5,11 @@ const maxSpeed: float = MovementGlobals.MAX_SPEED
 const jump_power: float = MovementGlobals.JUMP_POWER
 
 var motion = Vector2()
+var is_alive = true
 
 func _physics_process(delta: float) -> void:
+	if !is_alive: return
+
 	motion.y += MovementGlobals.GRAVITY;
 	
 	var friction = false
@@ -31,3 +34,10 @@ func _physics_process(delta: float) -> void:
 		print("Grabbing")
 	
 	motion = move_and_slide(motion, Vector2.UP)
+
+func on_killed() -> void:
+	motion = Vector2.ZERO
+	is_alive = false
+
+func on_respawn() -> void:
+	is_alive = true
