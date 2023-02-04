@@ -1,3 +1,29 @@
-[gd_scene format=2]
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Player.tscn" type="PackedScene" id=1]
+
+[sub_resource type="GradientTexture" id=1]
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 237, 40 )
 
 [node name="MainScene" type="Node2D"]
+
+[node name="Player" parent="." instance=ExtResource( 1 )]
+position = Vector2( 0, -149 )
+
+[node name="Camera2D" type="Camera2D" parent="."]
+current = true
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+position = Vector2( -1, 89 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Sprite" type="Sprite" parent="StaticBody2D"]
+scale = Vector2( 0.231641, 80.525 )
+texture = SubResource( 1 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+shape = SubResource( 2 )
