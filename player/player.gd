@@ -8,9 +8,12 @@ var motion = Vector2()
 var is_alive = true
 
 func _physics_process(delta: float) -> void:
+	if Input.is_action_pressed("respawn"):
+		position = $"../Position2D".position
+	
 	if !is_alive: return
 
-	motion.y += MovementGlobals.GRAVITY;
+	motion.y += MovementGlobals.GRAVITY
 	
 	var friction = false
 	var direction: Vector2 = Vector2.ZERO
