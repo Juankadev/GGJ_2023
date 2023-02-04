@@ -7,7 +7,6 @@ const jump_power: float = MovementGlobals.JUMP_POWER
 var motion = Vector2()
 
 var can_grab = false
-# var body_push_direction = 0
 
 onready var cached_player = $"../Player"
 
@@ -33,9 +32,17 @@ func _physics_process(delta: float) -> void:
 			motion.x = min(motion.x + speed, maxSpeed)
 		elif Input.is_action_pressed("move_left"):
 			motion.x = max(motion.x - speed, -maxSpeed)
+			
+		if is_on_floor():
+			if Input.is_action_just_pressed("jump"):
+				motion.y = jump_power
+			if friction == true:
+				motion.x = lerp(motion.x, 0, 0.5)
+		else:
+			if friction == true:
+				motion.x = lerp(motion.x, 0, 0.5)
 	else:
 		friction = true
-#		body_push_direction = 0
 
 	if friction == true:
 		motion.x = lerp(motion.x, 0, 0.5)
@@ -46,15 +53,9 @@ func _on_PushDetector_body_entered(body: Node) -> void:
 	if body.is_in_group("player"):
 		cached_player = body
 		can_grab = true
-#		if body.global_position.x > global_position.x:
-#			body_push_direction = -1
-#		else:
-#			body_push_direction = 1
-			
 		print("player can grab box")
 
 func _on_PushDetector_body_exited(body: Node) -> void:
 	if body.is_in_group("player"):
-#		body_push_direction = 0
 		can_grab = false
 		print("player cannot grab box")
