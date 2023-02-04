@@ -1,8 +1,8 @@
 extends KinematicBody2D
 
-const speed: float = 200.0
-const maxSpeed: float = 250.0
-const jump_power: float = -400.0
+const speed: float = 250.0
+const maxSpeed: float = 300.0
+const jump_power: float = -500.0
 const gravity: float = 15.0 	
 
 var motion = Vector2()
