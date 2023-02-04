@@ -13,7 +13,6 @@ onready var cached_player = $"../Player"
 
 func _physics_process(delta: float) -> void:
 	if false:
-		
 		if can_grab and Input.is_action_pressed("grab"):
 			motion = cached_player.motion
 			motion = move_and_slide(motion, Vector2.UP)
