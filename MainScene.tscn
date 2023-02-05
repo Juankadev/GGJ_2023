@@ -55,9 +55,6 @@ position = Vector2( 2088, -128 )
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
 position = Vector2( 1738, -161 )
-__meta__ = {
-"_edit_group_": true
-}
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
 position = Vector2( 48, 0 )
@@ -73,6 +70,11 @@ scale = Vector2( 1.26586, 1 )
 texture = ExtResource( 9 )
 texture_scale = 0.5
 range_z_min = -1028
+
+[node name="posGema" type="Sprite" parent="Player"]
+position = Vector2( 29, 23 )
+scale = Vector2( 0.390625, 0.484375 )
+texture = ExtResource( 2 )
 
 [node name="ParentBox2" parent="." instance=ExtResource( 7 )]
 position = Vector2( 9248, -672 )
