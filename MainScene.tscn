@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://Player.tscn" type="PackedScene" id=1]
 [ext_resource path="res://icon.png" type="Texture" id=2]
@@ -9,6 +9,7 @@
 [ext_resource path="res://box/ParentBox.tscn" type="PackedScene" id=7]
 [ext_resource path="res://musics/GGJ Roots 2023_Lvl1_Loop.wav" type="AudioStream" id=8]
 [ext_resource path="res://346-3466979_now-available-godot-light-texture-clipart.png" type="Texture" id=9]
+[ext_resource path="res://Gema.tscn" type="PackedScene" id=10]
 
 [sub_resource type="ConvexPolygonShape2D" id=1]
 points = PoolVector2Array( 64, 64, 0, 64, 0, 0, 64, 0 )
@@ -243,6 +244,10 @@ autoplay = true
 
 [node name="CanvasModulate" type="CanvasModulate" parent="."]
 color = Color( 0.152941, 0.152941, 0.152941, 1 )
+
+[node name="Gemas" type="Node2D" parent="."]
+
+[node name="Gema" parent="Gemas" instance=ExtResource( 10 )]
 
 [connection signal="body_entered" from="Checkpoints/CheckPointFirst" to="Checkpoints" method="_on_CheckPointFirst_body_entered"]
 [connection signal="body_entered" from="Checkpoints/CheckPointTwo" to="Checkpoints" method="_on_CheckPointTwo_body_entered"]
